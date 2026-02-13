@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Data Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        button.clear {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+        }
+
+        button.clear:hover {
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .success {
+            background: #D1FAE5;
+            color: #065F46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .success.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .data-preview {
+            text-align: left;
+            background: #F3F4F6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+
+        .data-preview h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .provider-item {
+            background: white;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #10B981;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎲 Mock Data Generator</h1>
+        <p>Generate sample provider data for testing the Green Source application</p>
+
+        <button onclick="generateMockData()">Generate Mock Data</button>
+        <button class="clear" onclick="clearData()">Clear All Data</button>
+
+        <div id="success" class="success">
+            ✅ <strong>Success!</strong> Mock data has been generated and saved to localStorage.
+            <br><br>
+            You can now open the <strong>admin page</strong> or <strong>user page</strong> to see the data!
+        </div>
+
+        <div id="preview" class="data-preview" style="display: none;">
+            <h3>📋 Generated Providers:</h3>
+            <div id="providerList"></div>
+        </div>
+    </div>
+
+    <script>
+        function generateMockData() {
+            const mockProviders = [
+                {
+                    id: Date.now() + 1,
+                    name: "GreenTech Solutions",
+                    price: 45.50,
+                    quality: 9,
+                    time: 3,
+                    capacity: 5000,
+                    score: 0
+                },
+                {
+                    id: Date.now() + 2,
+                    name: "EcoSupply Co.",
+                    price: 52.00,
+                    quality: 8,
+                    time: 5,
+                    capacity: 3500,
+                    score: 0
+                },
+                {
+                    id: Date.now() + 3,
+                    name: "Sustainable Resources Inc.",
+                    price: 38.75,
+                    quality: 7,
+                    time: 7,
+                    capacity: 4200,
+                    score: 0
+                },
+                {
+                    id: Date.now() + 4,
+                    name: "Nature's Best Suppliers",
+                    price: 41.25,
+                    quality: 10,
+                    time: 4,
+                    capacity: 6000,
+                    score: 0
+                },
+                {
+                    id: Date.now() + 5,
+                    name: "Renewable Goods Ltd.",
+                    price: 48.90,
+                    quality: 8,
+                    time: 2,
+                    capacity: 2800,
+                    score: 0
+                },
+                {
+                    id: Date.now() + 6,
+                    name: "Earth First Trading",
+                    price: 55.00,
+                    quality: 6,
+                    time: 6,
+                    capacity: 3000,
+                    score: 0
+                },
+                {
+                    id: Date.now() + 7,
+                    name: "Green Planet Distributors",
+                    price: 43.50,
+                    quality: 9,
+                    time: 3,
+                    capacity: 5500,
+                    score: 0
+                }
+            ];
+
+            // Save to localStorage
+            localStorage.setItem('providers', JSON.stringify(mockProviders));
+
+            // Show success message
+            const successDiv = document.getElementById('success');
+            successDiv.classList.add('show');
+
+            // Show preview
+            displayPreview(mockProviders);
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        function displayPreview(providers) {
+            const preview = document.getElementById('preview');
+            const providerList = document.getElementById('providerList');
+
+            providerList.innerHTML = providers.map(p => `
+                <div class="provider-item">
+                    <strong>${p.name}</strong><br>
+                    💰 $${p.price} | ⭐ ${p.quality}/10 | 🚚 ${p.time} days | 📦 ${p.capacity} units
+                </div>
+            `).join('');
+
+            preview.style.display = 'block';
+        }
+
+        function clearData() {
+            if (confirm('Are you sure you want to clear all provider data?')) {
+                localStorage.removeItem('providers');
+                document.getElementById('preview').style.display = 'none';
+
+                const successDiv = document.getElementById('success');
+                successDiv.innerHTML = '🗑️ <strong>Cleared!</strong> All provider data has been removed.';
+                successDiv.style.background = '#FEE2E2';
+                successDiv.style.color = '#991B1B';
+                successDiv.classList.add('show');
+
+                setTimeout(() => {
+                    successDiv.classList.remove('show');
+                    successDiv.innerHTML = '✅ <strong>Success!</strong> Mock data has been generated and saved to localStorage.<br><br>You can now open the <strong>admin page</strong> or <strong>user page</strong> to see the data!';
+                    successDiv.style.background = '#D1FAE5';
+                    successDiv.style.color = '#065F46';
+                }, 3000);
+            }
+        }
+
+        // Check if data already exists on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const existingData = localStorage.getItem('providers');
+            if (existingData) {
+                try {
+                    const providers = JSON.parse(existingData);
+                    displayPreview(providers);
+                } catch (error) {
+                    console.error('Error loading existing data:', error);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

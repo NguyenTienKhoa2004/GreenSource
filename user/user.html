@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Source | Provider Directory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="logo">
+                <h1>User Portal</h1>
+            </div>
+            <p class="subtitle">Browse available providers and their offerings</p>
+        </header>
+
+        <main class="content-wrapper user-content">
+            <!-- STATS SECTION -->
+            <section class="stats-panel">
+                <div class="stat-card card">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalProviders">0</h3>
+                        <p>Total Providers</p>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgQuality">0</h3>
+                        <p>Avg Quality Score</p>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgPrice">$0</h3>
+                        <p>Avg Price/Unit</p>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgTime">0</h3>
+                        <p>Avg Shipping Days</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROVIDERS LIST SECTION -->
+            <section class="results-panel">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-list-check"></i> Available Providers (<span id="count">0</span>)</h2>
+                    <div class="actions">
+                        <button id="viewChartBtn" class="btn-action">
+                            <i class="fa-solid fa-chart-bar"></i> View Analytics
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABLE VIEW -->
+                <div id="tableContainer" class="table-container card">
+                    <div class="table-responsive">
+                        <table id="providersTable">
+                            <thead>
+                                <tr>
+                                    <th>Provider Name</th>
+                                    <th>Price/Unit</th>
+                                    <th>Quality Score</th>
+                                    <th>Shipping Time</th>
+                                    <th>Max Capacity</th>
+                                    <th>Performance Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Rows will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="emptyState" class="empty-state">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <p>No providers available at the moment. Please check back later.</p>
+                    </div>
+                </div>
+
+                <!-- DASHBOARD SECTION -->
+                <div id="dashboardSection" class="dashboard-container card hidden">
+                    <div class="dashboard-header">
+                        <h2><i class="fa-solid fa-chart-pie"></i> Provider Comparison Analysis</h2>
+                        <p>Visualizing the scoring breakdown across all available providers.</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="providerChart"></canvas>
+                    </div>
+                    <button id="closeChartBtn" class="btn-secondary" style="margin-top: 1.5rem; width: auto;">
+                        <i class="fa-solid fa-xmark"></i> Close Chart
+                    </button>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <script src="user.js"></script>
+</body>
+
+</html>

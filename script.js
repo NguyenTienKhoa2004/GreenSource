@@ -4,6 +4,28 @@ document.addEventListener('DOMContentLoaded', () => {
     let editingId = null;
     let providerChart = null;
 
+    // Load providers from localStorage on page load
+    function loadProviders() {
+        const storedData = localStorage.getItem('providers');
+        if (storedData) {
+            try {
+                providers = JSON.parse(storedData);
+            } catch (error) {
+                console.error('Error loading providers:', error);
+                providers = [];
+            }
+        }
+    }
+
+    // Save providers to localStorage
+    function saveProviders() {
+        try {
+            localStorage.setItem('providers', JSON.stringify(providers));
+        } catch (error) {
+            console.error('Error saving providers:', error);
+        }
+    }
+
     // DOM Elements
     const form = document.getElementById('providerForm');
     const submitBtn = form.querySelector('button[type="submit"]');
@@ -71,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             providers.push(newProvider);
         }
 
+        saveProviders();
         renderProviders();
         form.reset();
         document.getElementById('providerName').focus();
@@ -104,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formTitle.innerHTML = '<i class="fa-solid fa-plus-circle"></i> Add Provider';
         }
         providers = providers.filter(p => p.id !== id);
+        saveProviders();
         renderProviders();
         dashboardSection.classList.add('hidden');
     }
@@ -229,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirm('Are you sure you want to clear all data?')) {
             providers = [];
             editingId = null;
+            saveProviders();
             renderProviders();
             form.reset();
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -293,4 +318,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         winnerModal.classList.remove('hidden');
     }
+
+    // Initialize: Load existing providers
+    loadProviders();
+    renderProviders();
 });
